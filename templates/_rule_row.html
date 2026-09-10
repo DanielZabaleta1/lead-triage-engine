@@ -1,0 +1,20 @@
+<tr id="rule-row-{{ rule.id }}" class="{{ '' if rule.enabled else 'disabled' }}">
+  <td>
+    <button class="toggle {{ 'on' if rule.enabled }}"
+            hx-post="/panel/rules/{{ rule.id }}/toggle"
+            hx-target="#rule-row-{{ rule.id }}"
+            hx-swap="outerHTML"
+            aria-label="Toggle rule"></button>
+  </td>
+  <td>{{ rule.name }}</td>
+  <td><code>{{ rule.field }}</code></td>
+  <td><code>{{ rule.operator }}</code></td>
+  <td>
+    <input type="number" name="points" value="{{ rule.points }}"
+           hx-post="/panel/rules/{{ rule.id }}/points"
+           hx-trigger="change"
+           hx-target="#rule-row-{{ rule.id }}"
+           hx-swap="outerHTML"
+           style="width:64px">
+  </td>
+</tr>

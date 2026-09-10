@@ -1,0 +1,24 @@
+<tr id="decision-row-{{ d.id }}">
+  <td>{{ d.score }}</td>
+  <td class="rationale">{{ d.matched_rules | map(attribute='name') | join(', ') if d.matched_rules else '—' }}</td>
+  <td><span class="pill source">{{ d.source }}</span></td>
+  <td><span class="pill {{ d.priority | lower }}">{{ d.priority }}</span></td>
+  <td>{{ '%.2f' % d.confidence if d.confidence is not none else '—' }}</td>
+  <td class="rationale">{{ d.rationale or '—' }}</td>
+  <td>
+    {% if d.reviewed_priority %}
+      <span class="pill {{ d.reviewed_priority | lower }}">reviewed → {{ d.reviewed_priority }}</span>
+    {% elif d.needs_review %}
+      <form hx-post="/panel/decisions/{{ d.id }}/review" hx-target="#decision-row-{{ d.id }}" hx-swap="outerHTML" style="display:flex; gap:6px;">
+        <select name="reviewed_priority">
+          <option value="P1">P1</option>
+          <option value="P2" selected>P2</option>
+          <option value="P3">P3</option>
+        </select>
+        <button class="primary" type="submit">Confirm</button>
+      </form>
+    {% else %}
+      <span style="color:var(--ink-3)">—</span>
+    {% endif %}
+  </td>
+</tr>

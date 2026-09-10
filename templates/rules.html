@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Rules</h1>
+<p class="sub">Toggle a rule off or edit its points — takes effect on the next lead scored, no deploy. That's the whole pitch of this screen.</p>
+<table>
+  <thead>
+    <tr><th></th><th>Rule</th><th>Field</th><th>Operator</th><th>Points</th></tr>
+  </thead>
+  <tbody>
+    {% for rule in rules %}
+      {% include "_rule_row.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

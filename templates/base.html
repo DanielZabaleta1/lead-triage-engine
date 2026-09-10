@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Triage Engine — Admin Panel</title>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <style>
+    :root {
+      --bg: #080810; --card: #12121c; --border: #23233a;
+      --ink: #EAEBF2; --ink-2: #9A9FB4; --ink-3: #676C82;
+      --blue: #1B6FE8; --up: #4FD1A0; --down: #E8534F; --warn: #E8B84F;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+    header .mark { font-weight: 300; font-size: 16px; } header .mark b { font-weight: 800; }
+    nav { display: flex; gap: 20px; }
+    nav a { color: var(--ink-2); text-decoration: none; font-size: 13px; font-weight: 600; padding: 6px 0; border-bottom: 2px solid transparent; }
+    nav a.active, nav a:hover { color: var(--ink); border-bottom-color: var(--blue); }
+    main { max-width: 980px; margin: 0 auto; padding: 28px 24px; }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    .sub { color: var(--ink-2); font-size: 13px; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); padding: 8px 10px; border-bottom: 1px solid var(--border); }
+    td { padding: 10px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: middle; }
+    tr.disabled td { opacity: .45; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .pill.p1 { background: rgba(232,83,79,.18); color: var(--down); }
+    .pill.p2 { background: rgba(232,184,79,.18); color: var(--warn); }
+    .pill.p3 { background: rgba(79,209,160,.18); color: var(--up); }
+    .pill.source { background: rgba(27,111,232,.16); color: var(--blue); }
+    .toggle { width: 40px; height: 22px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); cursor: pointer; position: relative; }
+    .toggle.on { background: var(--blue); border-color: var(--blue); }
+    .toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left .15s; }
+    .toggle.on::after { left: 20px; }
+    input[type=number], input[type=text], select { background: var(--card); border: 1px solid var(--border); color: var(--ink); border-radius: 6px; padding: 6px 8px; font-size: 13px; width: 90px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+    label { display: block; font-size: 12px; color: var(--ink-2); margin-bottom: 6px; }
+    .field { margin-bottom: 16px; }
+    button.primary { background: var(--blue); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font-weight: 600; cursor: pointer; font-size: 13px; }
+    .saved-badge { color: var(--up); font-size: 12px; margin-left: 10px; }
+    .filter-row { margin-bottom: 14px; }
+    .filter-row a { color: var(--ink-2); font-size: 12px; text-decoration: none; margin-right: 14px; }
+    .filter-row a.active { color: var(--blue); font-weight: 700; }
+    .rationale { color: var(--ink-2); font-size: 12px; max-width: 280px; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="mark">Lead<b>Triage</b></span>
+    <nav>
+      <a href="/panel/rules" class="{{ 'active' if active == 'rules' }}">Rules</a>
+      <a href="/panel/settings" class="{{ 'active' if active == 'settings' }}">Settings</a>
+      <a href="/panel/decisions" class="{{ 'active' if active == 'decisions' }}">Decisions</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

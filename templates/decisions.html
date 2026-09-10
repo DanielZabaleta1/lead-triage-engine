@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Decisions log</h1>
+<p class="sub">Every decision the system has made, rules-only or AI-assisted, with the full rationale. Nothing is logged silently.</p>
+<div class="filter-row">
+  <a href="/panel/decisions" class="{{ 'active' if not needs_review_only }}">All</a>
+  <a href="/panel/decisions?needs_review=true" class="{{ 'active' if needs_review_only }}">Needs review</a>
+</div>
+<table>
+  <thead>
+    <tr><th>Score</th><th>Matched rules</th><th>Source</th><th>Priority</th><th>Confidence</th><th>Rationale</th><th>Review</th></tr>
+  </thead>
+  <tbody>
+    {% for d in decisions %}
+      {% include "_decision_row.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

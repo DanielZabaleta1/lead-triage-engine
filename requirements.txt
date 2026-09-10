@@ -4,5 +4,7 @@ pydantic
 supabase
 google-genai
 jinja2
+python-multipart
 python-dotenv
 pytest
+httpx
