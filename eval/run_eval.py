@@ -25,6 +25,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from dotenv import load_dotenv  # noqa: E402
+
+load_dotenv()
+
 from app.ai_judge import AIJudgeError, judge  # noqa: E402
 from app.engine import evaluate_rules  # noqa: E402
 from app.models import LeadInput, Rule, Settings  # noqa: E402

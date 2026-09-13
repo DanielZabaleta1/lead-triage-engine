@@ -9,6 +9,10 @@ just one default.
 
 from datetime import datetime, timezone
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
