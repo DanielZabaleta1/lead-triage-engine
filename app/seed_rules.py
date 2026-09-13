@@ -42,7 +42,7 @@ RULES_V1 = [
         "name": "Country in target list (PLACEHOLDER pending sign-off)",
         "field": "country",
         "operator": "in",
-        "value": ["United States", "Canada"],
+        "value": ["United States", "Canada", "Costa Rica", "Mexico", "Colombia", "Panama", "Chile"],
         "points": 10,
     },
 ]

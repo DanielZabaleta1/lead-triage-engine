@@ -44,7 +44,7 @@ insert into triage.rules (name, field, operator, value, points) values ('Company
 insert into triage.rules (name, field, operator, value, points) values ('Company size: 500+', 'company_size_bucket', 'equals', '"500+"'::jsonb, 0);
 insert into triage.rules (name, field, operator, value, points) values ('Role: target buyer (COO/Ops Manager/Finance Director)', 'role', 'in', '["COO", "Operations Manager", "Finance Director"]'::jsonb, 20);
 insert into triage.rules (name, field, operator, value, points) values ('Urgency keyword in message/notes', 'message_or_notes', 'contains_any', '["urgent", "asap", "this month"]'::jsonb, 15);
-insert into triage.rules (name, field, operator, value, points) values ('Country in target list (PLACEHOLDER pending sign-off)', 'country', 'in', '["United States", "Canada"]'::jsonb, 10);
+insert into triage.rules (name, field, operator, value, points) values ('Country in target list (PLACEHOLDER pending sign-off)', 'country', 'in', '["United States", "Canada", "Costa Rica", "Mexico", "Colombia", "Panama", "Chile"]'::jsonb, 10);
 
 -- settings
 truncate table triage.settings;

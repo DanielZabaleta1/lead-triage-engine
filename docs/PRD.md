@@ -27,7 +27,7 @@ Field → condition → points. Grounded in Power Flow's actual ICP (`powerflow/
 2. **Company size:** 50-300 employees +20 (Power Flow's actual sweet spot — not a generic default) · 301-500 +10 · 1-49 +5 · 500+ +0
 3. **Role seniority:** COO / Operations Manager / Finance Director (Power Flow's 3 real target buyers) +20 · any other role +0
 4. **Urgency signal** in message/notes (keywords: "urgent", "asap", "this month") +15
-5. **Country in target list** +10 — **placeholder pending Daniel:** seeded as `["United States", "Canada"]` based on the site's English-first, USD-priced positioning, but this is a guess, not a confirmed fact, and needs his explicit sign-off before Fase 6's eval treats it as ground truth.
+5. **Country in target list** +10 — **placeholder pending Daniel:** seeded as `["United States", "Canada", "Costa Rica", "Mexico", "Colombia", "Panama", "Chile"]` (2026-09-13, Daniel added the LatAm markets to the original US/Canada guess), but this is still a guess, not a confirmed fact, and needs his explicit sign-off before Fase 6's eval treats it as ground truth.
 6. **Missing-data rule:** fewer than 3 of the 5 fields above present on a lead → routed straight to `ambiguous`, regardless of score. Incomplete data is itself a signal the rules can't safely resolve alone.
 
 **Bands:** score ≥ 70 → **P1** · score ≤ 40 → **P3** · 41-69 → **ambiguous → AI**
