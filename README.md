@@ -4,7 +4,7 @@ Prioritizes leads (P1/P2/P3) and explains its reasoning. Deterministic rules han
 
 Built as a portfolio piece for a **Product / technical BA** role. The point isn't the code — it's the product decisions: what the system is allowed to decide, where the AI is and isn't trusted, and how you know it works.
 
-**Status: in progress.** The engine, the pipeline guardrails, the API, and the admin panel are built and tested (44 tests passing). Still pending — both blocked on things only Daniel can provide: the eval numbers below (needs a Gemini key from a GCP project not shared with his production systems, plus his hand-labels on the 30 golden leads), and the deploy + demo GIF.
+**Status: in progress.** The engine, the pipeline guardrails, the API, and the admin panel are built and tested (44 tests passing), verified live against a real Supabase + Gemini backend (2026-09-13), and the eval (below) has run for real against Daniel's own hand labels. Still pending: the deploy + demo GIF.
 
 ## The problem
 
@@ -59,13 +59,21 @@ Rules live in a Postgres table (`triage.rules`), not in code. The admin panel to
 
 ## Eval results
 
-*Pending — needs the 30 golden leads in `eval/golden_leads.json` labeled by hand, and a Gemini key. Run `python eval/run_eval.py`; results and their honest reading land here.*
+Real run against Daniel's own hand labels on the 30 golden leads (`eval/golden_leads.json`), `python eval/run_eval.py`, 2026-09-13:
 
-Three configurations get compared against the hand labels: rules-only (ambiguous → P2), rules + AI hybrid, and AI-only. Expected reading, to be confirmed by the real numbers: rules-only misses in the middle band, AI-only is expensive and less explainable, the hybrid wins. If the numbers say otherwise, this section reports that and the rules or the prompt get one iteration — not a touch-up.
+| Config | Exact match vs. Daniel's label | Severe miss (P1 called P3, or P3 called P1) |
+|---|---|---|
+| A — rules only (ambiguous defaults to P2) | 43.3% (13/30) | 6.7% (2/30) |
+| B — rules + AI hybrid (the real pipeline) | 43.3% (13/30) | 20% (varied 2-6/11 ambiguous leads across repeat runs) |
+| C — AI judges every lead, rules ignored | 40.0% (12/30) | — |
+
+**The honest reading — not the one this project set out to find.** The working hypothesis (see the docstring in `eval/run_eval.py`) was that the hybrid would beat rules-only, since rules-only has no way to resolve the ambiguous band except a flat default. The real numbers say otherwise: adding the AI judge doesn't improve exact-match agreement at all, and roughly triples the *severe*-miss rate — cases where a genuinely hot lead gets called cold, or vice versa. Inspecting the two clearest severe misses (a 500+ employee company outside the ICP's sweet spot called P1 at 0.95 confidence; a lead that only weakly matched the target role called P1 at 0.85 confidence) shows the AI anchoring on one or two matching signals (right channel, plausible role) and overriding the size/fit signal that the rules already had right. Both were *above* the 0.7 confidence threshold that's supposed to route doubtful AI calls to human review — so the guardrail that exists specifically to catch low-confidence mistakes didn't catch either of these, because the model was confidently wrong, not uncertain.
+
+**Why this is reported instead of iterated away.** The rules or prompt could get another pass to chase a better number, but with only 11 leads ever reaching the AI judge, one more iteration risks tuning the prompt to this specific 30-lead set rather than fixing anything real — and the finding itself is the more useful one for a product-decision-making role: it's evidence the system correctly identifies when adding an AI layer *isn't* worth it yet, rather than reaching for AI because it's available. The practical takeaway for Power Flow: the deterministic default (P2 + review) is currently the safer choice in the ambiguous band, and the AI judge's value today is more about writing an explainable rationale on the leads that do go to human review than about replacing that human's judgment.
 
 ## Cost
 
-At ~100 leads/month with roughly 30% landing in the ambiguous band: ~30 Gemini `gemini-2.5-flash` calls/month, which is free tier. The daily cap in settings doubles as a cost ceiling if the system is ever pointed at a paid model.
+At ~100 leads/month with roughly 30% landing in the ambiguous band: ~30 Gemini `gemini-2.5-flash` calls/month, which is free tier at production pace. (Running the full 30-lead eval in one sitting is a burst of ~40 calls and does hit the free tier's 20-requests/day cap — billing was enabled on the eval's GCP project for that one-time run, at a cost of a few cents.) The daily cap in settings doubles as a cost ceiling if the system is ever pointed at a paid model.
 
 ## Running it
 
