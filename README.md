@@ -4,7 +4,11 @@ Prioritizes leads (P1/P2/P3) and explains its reasoning. Deterministic rules han
 
 Built as a portfolio piece for a **Product / technical BA** role. The point isn't the code — it's the product decisions: what the system is allowed to decide, where the AI is and isn't trusted, and how you know it works.
 
-**Status: in progress.** The engine, the pipeline guardrails, the API, and the admin panel are built and tested (44 tests passing), verified live against a real Supabase + Gemini backend (2026-09-13), and the eval (below) has run for real against Daniel's own hand labels. Still pending: the deploy + demo GIF.
+**Status: functionally complete.** The engine, the pipeline guardrails, the API, and the admin panel are built and tested (44 tests passing), verified live against a real Supabase + Gemini backend (2026-09-13), and the eval (below) has run for real against Daniel's own hand labels.
+
+![Admin panel demo — Rules, Settings, Decisions log](assets/demo.gif)
+
+*Rules screen (point values live-editable, no deploy) → Settings (bands, AI kill switch) → Decisions log (a rules-only P1 and P3, and an AI-assisted P2 with its rationale and confidence).*
 
 ## The problem
 
@@ -86,6 +90,8 @@ uvicorn app.main:app --reload            # API + panel at /panel/rules
 
 pytest                                   # 44 tests
 ```
+
+**Deploying:** `render.yaml` is a Render Blueprint — on render.com, New → Blueprint → point at this repo, paste the same 4 env vars in the dashboard (they're intentionally not committed), done.
 
 ## Structure
 
