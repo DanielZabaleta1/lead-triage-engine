@@ -4,7 +4,9 @@ Prioritizes leads (P1/P2/P3) and explains its reasoning. Deterministic rules han
 
 Built as a portfolio piece for a **Product / technical BA** role. The point isn't the code — it's the product decisions: what the system is allowed to decide, where the AI is and isn't trusted, and how you know it works.
 
-**Status: functionally complete.** The engine, the pipeline guardrails, the API, and the admin panel are built and tested (44 tests passing), verified live against a real Supabase + Gemini backend (2026-09-13), and the eval (below) has run for real against Daniel's own hand labels.
+**Live:** [lead-triage-engine.onrender.com](https://lead-triage-engine.onrender.com/panel/rules) — free-tier Render, so the first request after a while sleeps and takes ~30-60s to wake up.
+
+**Status: complete.** The engine, the pipeline guardrails, the API, and the admin panel are built and tested (44 tests passing), verified live against a real Supabase + Gemini backend (2026-09-13), and the eval (below) has run for real against Daniel's own hand labels.
 
 ![Admin panel demo — Rules, Settings, Decisions log](assets/demo.gif)
 
