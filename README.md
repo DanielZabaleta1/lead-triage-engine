@@ -6,6 +6,9 @@ Built as a portfolio piece for a **Product / technical BA** role. The point isn'
 
 **Live:** [lead-triage-engine.onrender.com](https://lead-triage-engine.onrender.com/panel/rules) — free-tier Render, so the first request after a while sleeps and takes ~30-60s to wake up.
 
+<!-- TODO Daniel: arrastrá acá "Project 3 - Lead Triage Video (compressed).mp4" desde el editor web de este README -->
+🎥 *[Video walkthrough pendiente de subir acá]*
+
 **Status: complete.** The engine, the pipeline guardrails, the API, and the admin panel are built and tested (44 tests passing), verified live against a real Supabase + Gemini backend (2026-09-13), and the eval (below) has run for real against Daniel's own hand labels.
 
 ![Admin panel demo — Rules, Settings, Decisions log](assets/demo.gif)
